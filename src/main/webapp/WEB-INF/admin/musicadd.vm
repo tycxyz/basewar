@@ -1,0 +1,23 @@
+#set($title="basewar添加音乐")
+
+#set($languages=$botool.getLanguages())
+
+<table border="1" align="center" width="600">
+	<tr><td colspan="2" align="left">位置：音乐管理-><input type="button" onclick="javascript:musicadd()" value="新增音乐"/></td></tr>
+	<tr><th width="13%" align="right">类型：</th>
+		<td align="left" >
+			#checkbox({"name":"type", "path":"s1_music_type"})
+		</td>
+	</tr>
+	<tr><th width="80" align="right">语言：</th>
+			<td align="left">
+				#checkbox({"name":"language", "path":"systemlanguage"})
+			</td>
+    </tr>
+    <tr><th align="right">费用：</th>
+		<td align="left">
+			#select({"name":"restype", "path":"res_types", "property" : $music.restype})
+		</td>
+	</tr>
+	<tr><th>别名：</th><td align="left" ><input type="text" size=75 name="name" value=""/></td></tr>
+</table>

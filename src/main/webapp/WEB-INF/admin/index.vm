@@ -1,0 +1,14 @@
+#set($title="basewar后台管理登录")
+#set($admin=$request.session.getAttribute("backuser"))
+#if($!{admin})
+	$response.sendRedirect("${link.contextPath}/admin/home")
+#end
+#set($layout="layout_notlogin.vm")
+
+<table border="0" align="center">
+	<tr><th colspan="2">basewar后台管理用户登录</th></tr>
+	<tr><td align="right">用户名：</td><td><input size=40 name="name" id="name" type="text" value=""/></td></tr>
+	<tr><td align="right">密码：</td><td><input size=40 name="password" id="password" type="password" value=""/></td></tr>
+	<tr><td colspan="2"><input type="button" id="commit" value="登录" onclick = "javascript:backlogin()"/></td></tr>
+	<tr><td colspan="2"><font color="red"><span id = "err"></span></font></td></tr>
+</table>

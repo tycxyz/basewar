@@ -1,0 +1,69 @@
+#set($ddid = $!{request.getParameter("p1")})
+#if(!$!{ddid})
+	#set($ddid = "0")
+#end
+#set($title="basewar维护数据字典")
+#set($curr_data = $botool.getCurrentDataDict($ddid))
+#set($items=$botool.getDataDict($ddid))
+
+
+<table border="1" align="center" width="800">
+	<tr><td colspan="6" align="center"><strong>数据字典管理</strong></td></tr>
+	
+	#if($!{curr_data})
+		<tr><th align="center" colspan="6">------------编辑当前项[$curr_data.itemkey]------------</th></tr>
+		<tr><td align="right">数据项：<br>(itemkey)</td><td align="left"" colspan="5"><input size=80 type="text" id="itemkey" value="$curr_data.itemkey"/></td></tr>
+		<tr><td align="right">别名：</td><td align="left" colspan="5"><input size=80 type="text" id="name" value="$curr_data.name"/></td></tr>
+		<tr><td align="right">数据值：<br>(itemvalue)</td><td align="left"" colspan="5"><input size=80 type="text" id="itemvalue" value="$curr_data.itemvalue"/></td></tr>
+		<tr><td align="right">描述：</td><td align="left"" colspan="5"><input size=80 type="text" id="dept" value="$!{curr_data.dept}"/></td></tr>
+		<tr><td align="right">排序：</td><td align="left"" colspan="5"><input size=80 type="text" id="ordinal" value="$curr_data.ordinal"/></td></tr>
+		<tr><td align="right">假删除：</td>
+			<td align="left"" colspan="5">
+				<select name="deleted">
+				  <option value ="1" #if($curr_data.deleted==1) selected #end>删除</option>
+				  <option value ="0" #if($curr_data.deleted==0) selected #end>启用</option>
+				</select>
+		</td></tr>
+		<tr><td align="center" colspan="6"><a href="javascript:saveDatadict($curr_data.ddid)">[保存]</a></td></tr>
+	#end
+	
+	#if($!{curr_data})
+		<tr><th align="center" colspan="6">------------编辑[$!{curr_data.itemkey}]的子项------------</th></tr>	
+		<tr><td align="left" colspan="6"><a href="$link.contextPath/admin/datadictmgr/$curr_data.pddid">[上一级]</a></td></tr>
+	#end
+	
+	<tr><th align="left">数据项</th><th align="left">别名</th><th>数据值</th><th>描述</th><th>排序</th><th>操作</th></tr>
+	#if(${items})
+		#foreach($item in $items)
+			<tr>
+				<td align="left">#if($item.hasChild==1)<a href="$link.contextPath/admin/datadictmgr/$item.ddid">[#end$item.itemkey#if($item.hasChild == 1)]</a>#end</td>
+				<td align="left">$item.name</td>
+				<td>$item.itemvalue</td>
+				<td align="left">$!{item.dept}</td>
+				<td>$item.ordinal</td>
+				<td><a href="javascript:delete_datadict($item.ddid)">[删除]</a>&nbsp;<a href="$link.contextPath/admin/datadictmgr/$item.ddid">[编辑]</a></td>
+			</tr>
+		#end
+	#else
+		<tr><td colspan="6">还没有数据</td></tr>
+	#end
+</table>
+
+<br><div class='popbox' id="new{$ddid}">
+	<a class='open' href="#"><small>新增子项..</small></a>
+	<div class='collapse'>
+		<div class='box'>
+			<div class='arrow'></div>
+			<div class='arrow-border'></div>
+			<form action="" method="post" id="subForm">
+				<input type="text" id="new_itemname" placeholder="别名"/><br>
+				<input type="text" id="new_itemkey" placeholder="itemkey"/><br>
+				<input type="text" id="new_itemvalue" placeholder="itemvalue"/><br>
+				<input type="text" id="new_itemdept" placeholder="描述"/><br>
+				<input type="text" id="new_itemordinal" placeholder="排序"/>
+				<input type="button" class="close" value="新增" onclick="javascript:add_datadict($ddid)"/> <a href="#" class="close">取消</a>
+			</form>
+		</div>
+	</div>
+	<br>
+</div>

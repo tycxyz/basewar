@@ -1,0 +1,106 @@
+#set($admin=$request.session.getAttribute("backuser"))
+#if(!($!{admin}))
+	$response.sendRedirect("${link.contextPath}/admin")
+#end
+
+<!------------------------------------------测试版--------------------------------------------->
+
+<div id="prompt" class="prompt" style="z-index: 1; width: 100%;
+	background-color: #455469;
+	position: fixed;
+	text-align: center;
+	font-style: italic;
+	color: white;">
+你正在使用的是【basewar测试版】，资源测试通过后，再由专人上传至正式版并启用，为达到最佳使用效果，推荐使用chrome浏览器
+</div>
+
+<!--
+<div id="prompt" class="prompt" style="z-index: 1; width: 100%;
+	background-color: #4DB849;
+	position: fixed;
+	text-align: center;
+	font-style: italic;
+	color: white;">
+你正在使用的是【basewar正式版】，为达到最佳使用效果，推荐使用chrome浏览器
+</div>
+-->
+
+<div id="menu" style="z-index: 99;">
+  <ul class="menu" >
+  
+  	<li><a href="#" class="parent"><span>音乐管理</span></a>
+      <div>
+        <ul>
+          <li><a href="${link.contextPath}/admin/musiclist"><span>音乐列表</span></a></li>
+          <li><a href="${link.contextPath}/admin/musicadd"><span>添加音乐</span></a></li>
+        </ul>
+      </div>
+    </li>
+    
+    <li><a href="#" class="parent"><span>书籍管理</span></a>
+      <div>
+        <ul>
+          <li><a href="#"><span>书籍列表</span></a></li>
+          <li><a href="#"><span>添加书籍</span></a></li>
+        </ul>
+      </div>
+    </li>      
+    
+    
+    <li><a href="#" class="parent"><span>其它管理</span></a>
+      <div>
+        <ul>
+          	<li><a href="#" class="parent"><span>消息管理</span></a>
+        		<div>
+	        	 	<ul>
+	                    <li><a href="#"><span>消息列表</span></a></li>
+	                    <li><a href="#"><span>添加消息</span></a></li>
+	                </ul>
+	            </div>
+        	</li>
+        </ul>
+      </div>
+    </li>
+    
+    <li><a href="#" class="parent"><span>系统管理员</span></a>
+      <div>
+        <ul>
+        	<li><a href="#" class="parent"><span>文件管理</span></a>
+        		<div>
+	        	 	<ul>
+	                    <li><a href="javascript:update_music_file_size()"><span>刷新音乐文件大小</span></a></li>
+	                </ul>
+	            </div>
+        	</li>
+          	<li><a href="#" class="parent"><span>数据字典管理</span></a>
+        		<div>
+	        	 	<ul>
+	                    <li><a href="${link.contextPath}/admin/datadictmgr"><span>树状字典管理</span></a></li>
+	                    <li><a href="${link.contextPath}/admin/datadict_kv_list"><span>KV字典管理</span></a></li>
+	                </ul>
+	            </div>
+        	</li>
+        </ul>
+      </div>
+    </li>
+    
+    <li><a href="javascript:logout();"><span>退出</span></a></li>
+  </ul>
+</div>
+
+<script type="text/javascript">
+$(function(){
+ 	#set($ff=$request.getParameter("header"));
+ 	
+    $("div#menu>ul.menu>li").each(function(){
+         $(this).find("li>a").each(function(){
+            var xx = $(this).attr("href");
+            
+            if(xx.indexOf('$ff')>=0){
+              $(this).parents("li").hover();
+            }
+            
+         })
+    })
+})
+  </script>

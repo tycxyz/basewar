@@ -1,0 +1,108 @@
+#set($title="basewar音乐列表")
+
+#set($map = $botool.getMusics($request))
+#set($musicList = ${map.get("musics")})
+#set($pagination = ${map.get("pag")})
+#set($subdir = "${link.contextPath}/file/ds/")
+#set($dd_names_res_types = $botool.getDataDictNames("res_types"))
+#set($typenames = $botool.getDataDictNames("s1_music_type"))
+
+
+<form id="queryform" name="queryform" action="$!{link.contextPath}/admin/musiclist" method="post" style="margin: 0px;">
+<table border="1" align="center" width="87%">
+    <tr><td colspan="10" align="left">位置：音乐管理->音乐列表</td></tr>
+    <tr>
+       <th colspan="10"  style="text-align: left;" colspan="2">搜索</th>
+    </tr>
+    <tr>
+       <td colspan="7" align="left">
+			&nbsp;&nbsp;语言环境：#select({"name":"lid", "path":"systemlanguage","style":"width:130px;", "property":"$!{request.getParameter('lid')}"})&nbsp;&nbsp;
+			类型：#select({"name":"type", "path":"s1_music_type", "property":"$!{request.getParameter('type')}"})&nbsp;&nbsp;
+			费用：#select({"name":"restype", "path":"res_types", "property":"$!{request.getParameter('restype')}"})&nbsp;&nbsp;
+			音乐名称：<input type="text" name="mname" value="$!{map.get("mname")}" style="width: 150px;padding: 0px;"/>&nbsp;&nbsp;
+			<input type="button" name="search" onclick="query();" value="搜索"/>&nbsp;&nbsp;
+			<input type="button" name="reset" onclick="qk();" value="清空"/>&nbsp;&nbsp;
+       </td>
+    </tr>
+    	##-----------------分页---------------------
+	#if(${pagination})
+		<tr><td><font size="2">共[<font color="red">$pagination.count</font>]个音频，每页显示[<font color="red">$pagination.perPage</font>]个，第[<font color="red">$pagination.current</font>/<font color="red">$pagination.totalPage</font>]页<br></font></td></tr>
+		<tr>
+			<td align="center">
+				#if($pagination.totalPage > 1)
+					<ul class="pager">
+						#if(${pagination.previous} > 0)
+							<li class="page"><a href="javascript:topage($pagination.previous)"><</a></li>
+						#end
+						<li class="page#if($pagination.first == $pagination.current) current#end"><a href="javascript:topage($pagination.first)">$pagination.first</a></li>
+						#if($pagination.pageStart > 0) 
+							#foreach($item in [$pagination.pageStart..$pagination.pageEnd])
+								<li class="page#if($item == $pagination.current) current#end"><a href="javascript:topage($item)">$item</a></li>
+							#end
+						#end
+						<li class="page#if($pagination.last == $pagination.current) current#end"><a href="javascript:topage($pagination.last)">$pagination.last</a></li>
+						#if(${pagination.next} > 0)
+							<li class="page"><a href="javascript:topage($pagination.next)">></a></li>
+						#end
+					</ul>
+					<input type="hidden" name="current" value=""/>
+					<input type="hidden" name="count" value="$pagination.count"/>
+					<input type="hidden" name="perPage" value="$pagination.perPage"/>
+				#end
+			</td>
+		</tr>
+	#end
+	##------------------------------------------
+</table>
+</form>
+
+
+  <script type="text/javascript">
+     function qk(){
+         $(':input','#queryform')  
+		.not(':button, :submit, :reset, :hidden')  
+		.val('')  
+		.removeAttr('checked')  
+		.removeAttr('selected');  
+     }
+     
+     function topage(page){
+     	var form = document.forms[0];
+		form.current.value = page;
+		form.submit();
+     }
+     
+     function query(){
+       var form = document.forms[0];
+	   $("input[name=current]").remove();
+	   $("input[name=count]").remove();
+	   $("input[name=perPage]").remove();
+	   form.submit();
+     }
+  </script>
+  
+<br>
+<table border="1" align="center" width="87%">
+	#if($!{musicList} && $musicList.size() > 0)
+		<tr><th>名称</th><th>音频文件</th><th>大小(KB)</th><th>封面(120*113?)</th><th>已启用？</th><th>性质</th><th>支持录音？</th><th>更新时间</th><th>操作</th></tr>
+		#foreach($music in $!{musicList})
+			#if($velocityCount%2==0)
+		         <tr style="background:rgb(236, 236, 236);">
+		    #else
+		         <tr>
+		    #end
+				<td>$music.mname</td>
+				<td><a href="$subdir$music.mfname">$!{music.mfname}</a></td>
+				<td>$music.size</td>
+				<td><img src="$subdir$music.coverpic"/><br>$!{music.coverpic}</td>
+				<td><img src="${link.contextPath}/images/delete_flag_${music.deleted}.png"/></td>
+				<td>$!{dd_names_res_types.get($music.restype)}</td>
+				<td><img src="${link.contextPath}/images/delete_flag_#if($music.recsupport==0)$math.add(${music.recsupport}, 1)#else$math.sub(${music.recsupport}, 1)#end.png"/></td>
+				<td>$!{date.format("MM/dd/yyyy HH:mm:ss", $music.lasttime)}</td>
+				<td><a href="musicedit/$music.mid">编辑</a></td>
+			</tr>
+		#end
+	#else
+		<tr><td>没有音乐文件</td></tr>
+	#end
+<table>

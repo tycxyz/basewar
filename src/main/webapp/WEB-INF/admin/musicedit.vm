@@ -1,0 +1,55 @@
+#set($title="basewar编辑音乐")
+#set($mid=$request.getParameter("p1"))
+#set($subdir = "${link.contextPath}/file/ds/")
+
+#set($music=$botool.getMusic($mid))
+#set($checkedType=$botool.getMusicTypes($mid))
+#set($checkedLang=$botool.getMusicLanguages($mid))
+
+#if($!{music})
+	<table border="1" align="center" width="600">
+		<tr><td align="right">启停：</td>
+			<td align="left">
+				<select name="deleted">
+				  <option value ="1" #if($music.deleted==1) selected #end>已停用</option>
+				  <option value ="0" #if($music.deleted==0) selected #end>已启用</option>
+				</select>
+			</td>
+		</tr>
+		<tr><td align="right">名称：</td><td align="left" ><input type="text" size=80 name="name" value="$music.mname"/></td></tr>
+		
+		<tr><td width="70" align="right">类型：</td>
+			<td align="left" >
+				#checkbox({"name":"type", "path":"s1_music_type", "property":$checkedType})
+			</td>
+		</tr>
+		<tr><td width="80" align="right">语言：</td>
+			<td align="left">
+				#checkbox({"name":"language", "path":"systemlanguage", "property":$checkedLang})
+			</td>
+		</tr>
+		<tr><td align="right">表演者：</td><td align="left" ><input type="text" size=80 name="performer" value="$!{music.performer}"/></td></tr>
+		<tr><td align="right">作者：</td><td align="left" ><input type="text" size=80 name="author" value="$!{music.author}"/></td></tr>
+		<tr><td align="right">获赞：</td><td align="left" >$!{music.favourites}</td></tr>
+		<tr><td align="right">支持录音？</td>
+			<td align="left">
+				<select name="recsupport">
+				  <option value ="1" #if($music.recsupport==1) selected #end>支持</option>
+				  <option value ="0" #if($music.recsupport==0) selected #end>不支持</option>
+				</select>
+			</td>
+		</tr>
+		<tr><td align="right">费用：</td>
+			<td align="left">
+				#select({"name":"restype", "path":"res_types", "property" : $music.restype})
+			</td>
+		</tr>
+		
+		<tr><td colspan="2" style="background-color:#ECECEC"><input type="button" onclick="javascript:musicedit($mid)" value="编辑音乐——保存以上信息"/><input type="button" onclick="javascript:history.back(-1)" value="返回"/></td></tr>
+		
+		<tr><td align="right">音频：</td><td align="left"><span><a href="$subdir$!{music.mfname}">$!{music.mfname}</a><input type="file" exts="*.mp3" class="up" id="musicmp3$mid" rowid="$mid" tar="music_file" inoss="true"/></span></td></tr>
+		<tr><td align="right">封面：<br>(120*113)</td><td align="left"><div><img src="$subdir$!{music.coverpic}">$!{music.coverpic}</div><input type="file" exts="*.png; *.jpg;" class="up" id="musicpic$mid" rowid="$mid" tar="music_coverpic"/></td></tr>
+		<tr><td align="right">歌词：</td><td align="left"><a href="$subdir$!{music.lyric}">$!{music.lyric}</a><input type="file" exts="*.lrc;" class="up" id="musiclrc" rowid="$mid" tar="music_lrc"/></td></tr>
+		
+	</table>
+#end

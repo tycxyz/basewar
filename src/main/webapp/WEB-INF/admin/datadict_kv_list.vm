@@ -1,0 +1,35 @@
+#set($title="basewar KV字典管理")
+
+#set($kvdatas = $botool.getKvDataDict())
+
+<table width="800px" align="center">
+	<tr><th>名称</th><th>键</th><th>值</th><th>有效？</th><th>编辑</th></tr>
+	#if($kvdatas)
+		#foreach($kvdata in $kvdatas)
+			<tr>
+				<td>$kvdata.name</td><td>$kvdata.itemkey</td><td>$kvdata.itemvalue</td><td>#if($kvdata.used == 1)有效#else无效#end</td>
+				<td><a href="javascript:delete_kv_datadict($kvdata.ddid)">删除</href>&nbsp;<a href="datadict_kv_edit/$kvdata.ddid">编辑</href></td>
+			</tr>
+		#end 
+	#else
+		<tr><td colspan="5">无数据</td></tr>
+	#end
+</table>
+
+<br><div class='popbox' id="newddkv">
+	<a class='open' href="#"><small>新增项目..</small></a>
+	<div class='collapse'>
+		<div class='box'>
+			<div class='arrow'></div>
+			<div class='arrow-border'></div>
+			<form action="" method="post" id="subForm">
+				<input type="text" id="new_itemname" placeholder="别名"/><br>
+				<input type="text" id="new_itemkey" placeholder="itemkey"/><br>
+				<input type="text" id="new_itemvalue" placeholder="itemvalue"/><br>
+				<input type="text" id="new_itemdept" placeholder="描述"/><br>			
+				<input type="button" class="close" value="新增" onclick="javascript:add_datadict_kv()"/> <a href="#" class="close">取消</a>
+			</form>
+		</div>
+	</div>
+	<br>
+</div>

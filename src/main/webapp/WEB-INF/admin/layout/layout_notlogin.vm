@@ -1,0 +1,120 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<head>
+    <title>$title</title> 
+    <meta http-equiv="content-script-type" content="text/javascript">
+    <link rel="stylesheet" href="${link.contextPath}/css/jquery-ui-1.10.3.css" />
+    <link rel="stylesheet" href="${link.contextPath}/css/uploadify.css" />
+    <link rel="stylesheet" href="${link.contextPath}/css/lanrenzhijia.css" />
+    <link rel="stylesheet" href="${link.contextPath}/css/popbox.css" />
+    <link rel="stylesheet" href="${link.contextPath}/css/popbox_.css" />
+    <script type="text/javascript" src="${link.contextPath}/js/jquery-1.8.3.js"></script>
+	<script type="text/javascript" src="${link.contextPath}/js/jquery-ui-1.10.3.js"></script>
+	<script type="text/javascript" src="${link.contextPath}/js/lanrenzhijia.js"></script>
+ 	<script type="text/javascript" src="${link.contextPath}/js/jquery.uploadify.min.js"></script>
+ 	<script>var ctxtPath = "$link.contextPath";</script>
+ 	<script type="text/javascript" src="${link.contextPath}/js/comm.js" charset="utf-8"></script>
+ 	<script type="text/javascript" src="${link.contextPath}/js/back.js" charset="utf-8"></script>
+ 	<script type="text/javascript" src="${link.contextPath}/js/popbox.js"></script>
+ 	<script type="text/javascript" src="${link.contextPath}/js/layer.js"></script>
+	<style type="text/css">
+		table{
+			border-collapse: collapse;
+			border: none;			
+		}
+		
+/* paging */
+ .pager {
+	margin: 0px;
+}
+ul, ol {
+	list-style-type: none;
+}
+.pager {
+	overflow: hidden;
+}
+
+.pager li {
+	float: left;
+	margin: 0 5px 0 0;
+}
+
+.pager li a {
+	font-family: Courier New, Arial;
+	font-size: 12pt;
+	color: #58595b;
+	background-color: #f2f2f2;
+	display: block;
+	text-align: center;
+	padding: 3px 6px;
+	text-decoration: none;
+}
+
+.pager li a:hover {
+	color: #000;
+}
+
+.pager li.prev a {
+	background-color: #ccc;
+	color: #666;
+}
+
+.pager li.next a {
+	background-color: #ccc;
+	color: #666;
+}
+
+.pager li.current a {
+	color: #fff;
+	font-weight: bold;
+	border: 0;
+	background: #58595b;
+}
+		#menu{
+		   z-index: 1;
+		}
+		th{
+			padding: 5px 15px 5px 5px;
+			background-color:rgb(40, 112, 168);
+			border: 1px solid #B1B1B1;
+			color: #ffffff;
+			text-align: center;
+		}
+		td{
+			border: solid #B1B1B1 1px;
+		}
+		
+		.upload-Bar .bar {
+			float: left;
+			background: url(${link.contextPath}/images/uplpad-bar-bk.png) no-repeat;
+			width: 160px;
+			height: 12px;
+			margin: 5px 5px 0 15px;
+			overflow: hidden;
+		}
+		
+		.upload-Bar .bar span {
+			float: left;
+			background: url(${link.contextPath}/images/bar-span.png) repeat-x;
+			margin: 0 1px;
+			height: 12px;
+		}
+		
+		.upload-Bar b {
+			float: left;
+			font-weight: normal;
+			margin-right: 8px;
+			line-height: 22px;
+			font-size: 12px;
+			color: #999999;
+		}
+	  </style>
+</head>
+    <body>
+	    <br><br><br><br>
+    	<div id="content" style="text-align:center;border:0px solid red;">
+    		<div id="main" style="text-align:center;border:0px solid red;">$screen_content</div>
+    	</div>
+    	<br><br>
+    	<div id="footer" style="text-align:center;border:0px solid red;">#parse('/WEB-INF/admin/layout/footer.vm')</div>
+    </body>
+</html>

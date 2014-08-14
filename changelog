@@ -1,0 +1,26 @@
+
+------------------20140813------------------ 
+- 添加分页功能
+
+------------------20140808------------------
+- 添加日志记录
+- 添加多语言功能，包括反馈信息多语言化，资源的语言属性两个方面。
+- 添加全套数据字典功能
+- 客户端接口示例：
+(1)http://tyc/base/action/client/listmusic?mtypes=4&lang=zh-CN
+++其中mtypes是一个类型的拼串，以逗号分隔
+++type和language都是对应关系表
+
+(2)http://tyc:8082/base/action/client/listmtype?lang=en
+++lang为多语言标识，目前只支持en/zh-CN两种
+
+------------------20140725------------------
+搭建整个框架，包括
+- url映射处理，
+- 大servlet入口，
+- velocity解析与处理框架，
+- 后台管理菜单等。
+- 可以指定web app的path
+- popbox
+- layerjs
+- uploadify上传套件

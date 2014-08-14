@@ -1,0 +1,21 @@
+<tools> 
+    <data type="boolean" key="xhtml" value="true"/>  
+    <data type="boolean" key="isSimple" value="true"/>  
+    <data type="number" key="version" value="2.0"/>  
+    <data key="foo">this is foo</data>  
+    <data key="bar">this is bar.</data>
+    <toolbox scope="request">
+        <tool class="org.apache.velocity.tools.view.ViewContextTool"/>
+        <tool key="link" class="org.apache.velocity.tools.view.LinkTool"/>
+        <tool class="org.apache.velocity.tools.generic.ResourceTool"/>
+    </toolbox>
+    <toolbox scope="session" locale="en_US">
+    	<tool class="org.apache.velocity.tools.view.BrowserTool" languagesFilter="en"/>
+    </toolbox>
+    <toolbox scope="application">
+        <tool key="botool" class="xyz.tyc.ds.core.velocity.BoTool"/>
+    	<tool key="math" class="org.apache.velocity.tools.generic.MathTool"></tool>
+    	<tool key="date" class="org.apache.velocity.tools.generic.DateTool"></tool>
+    	<tool key="number" class="org.apache.velocity.tools.generic.NumberTool"></tool>
+    </toolbox>
+</tools>
